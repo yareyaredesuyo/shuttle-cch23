@@ -22,9 +22,10 @@ async fn sql_route(State(pool): State<Pool>) -> Result<String, AppError> {
     let number = sqlx::query!("SELECT 20231213 number")
         .fetch_one(&pool.pool)
         .await?
-        .number;
+        .number
+        .unwrap();
 
-    Ok(number.expect("number wrap error").to_string())
+    Ok(number.to_string())
 }
 
 async fn reset_route(State(pool): State<Pool>) -> Result<(), AppError> {
